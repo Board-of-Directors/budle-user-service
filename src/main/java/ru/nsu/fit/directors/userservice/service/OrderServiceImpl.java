@@ -24,7 +24,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class OrderServiceImpl implements OrderService {
     private final SecurityService securityService;
-    private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
+    private final KafkaTemplate kafkaTemplate;
     private final WebClient.Builder orderClientBuilder;
     private final WebClient.Builder establishmentClientBuilder;
 
