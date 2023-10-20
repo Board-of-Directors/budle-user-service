@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "user/order", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrderController {
     private final OrderService orderService;
 
