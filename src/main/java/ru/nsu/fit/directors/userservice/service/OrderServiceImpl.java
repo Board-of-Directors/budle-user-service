@@ -24,7 +24,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class OrderServiceImpl implements OrderService {
     private final SecurityService securityService;
-    private final KafkaTemplate kafkaTemplate;
+    private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
     private final WebClient.Builder orderClientBuilder;
     private final WebClient.Builder establishmentClientBuilder;
 
@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
         };
         boolean isOrderTimeNotValid = Optional.ofNullable(establishmentClientBuilder.build()
                 .get()
-                .uri(uriBuilder -> uriBuilder.path("/internal/time")
+                .uri(uriBuilder -> uriBuilder.path("establishment/internal/time")
                     .queryParam("establishmentId", requestOrderDto.getEstablishmentId())
                     .build())
                 .accept(MediaType.APPLICATION_JSON)

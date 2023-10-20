@@ -42,6 +42,7 @@ dependencies {
     implementation 'io.micrometer:micrometer-tracing-bridge-brave'
     implementation 'io.zipkin.reporter2:zipkin-reporter-brave:2.16.4'
     implementation 'org.springframework.kafka:spring-kafka'
+    compileOnly 'org.springframework.kafka:spring-kafka'
 }
 
 springBoot {

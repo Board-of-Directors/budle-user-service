@@ -36,7 +36,7 @@ public class OrderController {
      *
      * @param orderId identifier of order to cancel it.
      */
-    @PutMapping(value = "/cancel", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/cancel")
     public void cancelOrder(@RequestParam Long orderId) {
         orderService.cancelOrder(orderId);
     }
@@ -47,7 +47,7 @@ public class OrderController {
      * @param status order status (optional)
      * @return list of user orders
      */
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<ResponseOrderDto> getOrders(@RequestParam(required = false) Integer status) {
         return orderService.getOrders(status);
     }
