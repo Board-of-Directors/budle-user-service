@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
         kafkaTemplate.send("orderTopic", toEvent(order));
     }
 
-    private OrderEvent toEvent(RequestOrderDto order) {
+    private OrderCreatedEvent toEvent(RequestOrderDto order) {
         return new OrderCreatedEvent()
             .setGuestCount(order.getGuestCount())
             .setDate(order.getDate())
