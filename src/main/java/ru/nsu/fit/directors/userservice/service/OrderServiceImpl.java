@@ -30,8 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void createOrder(RequestOrderDto order) {
-        User loggedUser = securityService.getLoggedInUser();
-        order.setUserId(loggedUser.getId());
+        order.setUserId(securityService.getLoggedInUser().getId());
         validateOrderTime(order);
         kafkaTemplate.send("orderTopic", toEvent(order));
     }

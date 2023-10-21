@@ -7,6 +7,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class OrderCancelledEvent extends OrderEvent {
+public class OrderCancelledEvent implements OrderEvent {
     private Long orderId;
 }

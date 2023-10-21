@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class OrderCreatedEvent extends OrderEvent {
+public class OrderCreatedEvent implements OrderEvent {
     @Min(value = 1, message = "Заказ не может быть на отрицательное количество людей.")
     private Integer guestCount;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -21,9 +21,5 @@ public class OrderCreatedEvent extends OrderEvent {
     private LocalTime time;
     private Long establishmentId;
     private Long spotId;
-
-    public OrderCreatedEvent setUserId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
+    private Long userId;
 }
