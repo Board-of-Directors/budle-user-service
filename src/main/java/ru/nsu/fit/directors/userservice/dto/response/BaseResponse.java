@@ -2,7 +2,6 @@ package ru.nsu.fit.directors.userservice.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.nsu.fit.pak.budle.exceptions.ResponseException;
 
 /**
  * Base response of our application.
