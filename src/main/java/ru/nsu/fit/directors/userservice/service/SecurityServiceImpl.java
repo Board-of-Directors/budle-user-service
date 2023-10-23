@@ -2,6 +2,7 @@ package ru.nsu.fit.directors.userservice.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.ws.rs.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,8 +12,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
 import ru.nsu.fit.directors.userservice.model.User;
 
 @Service
@@ -30,21 +31,18 @@ public class SecurityServiceImpl implements SecurityService {
             return user;
         }
         log.warn("Info is not instance of user details");
-        throw new RuntimeException("User not logged in");
+        throw new BadRequestException("User not logged in");
     }
 
     @Override
     public void autoLogin(String username, String password, HttpServletRequest request) {
-        log.info("Auto login");
-        log.info(username);
-        log.info(password);
+        log.info("Auto login for username {} and password {}", username, password);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         if (userDetails == null) {
             log.warn("User details was null");
-            throw new UsernameNotFoundException("User with this username does not exist");
+            throw new UserNotFoundException();
         }
-        log.info(userDetails.toString());
-        log.info("Auto login success");
+        log.info("Auto login success for {}", userDetails);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
             new UsernamePasswordAuthenticationToken(
                 userDetails,
