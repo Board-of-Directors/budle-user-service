@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
+import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.userservice.exception.ClientException;
 import ru.nsu.fit.directors.userservice.exception.ServerNotAvailableException;
 
@@ -43,8 +44,14 @@ public class OrderApi implements DefaultApi {
                 .uri(uriBuilder)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, response -> response.bodyToMono(String.class).map(ClientException::new))
-                .onStatus(HttpStatusCode::is5xxServerError, response -> response.bodyToMono(String.class).map(ServerNotAvailableException::new))
+                .onStatus(
+                    HttpStatusCode::is4xxClientError,
+                    response -> response.bodyToMono(BaseResponse.class).map(resp -> new ClientException(resp.getException().getMessage()))
+                )
+                .onStatus(
+                    HttpStatusCode::is5xxServerError,
+                    response -> response.bodyToMono(String.class).map(ServerNotAvailableException::new)
+                )
                 .toEntityList(type)
                 .block())
             .map(ResponseEntity::getBody)
