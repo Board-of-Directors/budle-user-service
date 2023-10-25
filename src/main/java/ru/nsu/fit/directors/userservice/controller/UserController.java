@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.fit.directors.userservice.dto.request.RequestUserDto;
+import ru.nsu.fit.directors.userservice.dto.response.ResponseUserDto;
 import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.service.SecurityService;
 import ru.nsu.fit.directors.userservice.service.UserService;
@@ -66,8 +67,8 @@ public class UserController {
      * @return user information
      */
     @GetMapping(value = "/me")
-    public User me() {
-        return securityService.getLoggedInUser();
+    public ResponseUserDto me() {
+        return userService.getLoggedInUser();
     }
 
 }
