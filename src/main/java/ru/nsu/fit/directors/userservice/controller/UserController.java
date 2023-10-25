@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.fit.directors.userservice.dto.request.RequestUserDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseUserDto;
-import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.service.SecurityService;
 import ru.nsu.fit.directors.userservice.service.UserService;
 
