@@ -24,13 +24,11 @@ public class UserServiceImpl implements UserService {
     public void registerUser(RequestUserDto requestUserDto) {
         log.info("Registering user");
         if (existsByPhoneNumberOrUsername(requestUserDto)) {
-            log.warn("User already exists");
             throw new UserAlreadyExistsException();
         } else {
             User user = userMapper.dtoToModel(requestUserDto);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-            log.info("Registered user");
         }
     }
 
@@ -40,7 +38,7 @@ public class UserServiceImpl implements UserService {
         return ResponseUserDto.builder()
             .id(user.getId())
             .phoneNumber(user.getPhoneNumber())
-            .username(user.getPhoneNumber())
+            .username(user.getUsername())
             .build();
     }
 

@@ -20,6 +20,6 @@ public class RequestOrderDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime time;
     private Long establishmentId;
-    private Long userId;
     private Long spotId;
+    private String username;
 }

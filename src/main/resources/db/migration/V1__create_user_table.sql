@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS users cascade;
-
 CREATE TABLE users
 (
     id           bigserial,

@@ -22,4 +22,5 @@ public class OrderCreatedEvent implements OrderEvent {
     private Long establishmentId;
     private Long spotId;
     private Long userId;
+    private String guestName;
 }
