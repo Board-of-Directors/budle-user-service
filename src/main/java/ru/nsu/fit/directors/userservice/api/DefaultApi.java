@@ -7,7 +7,6 @@ import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 public interface DefaultApi {

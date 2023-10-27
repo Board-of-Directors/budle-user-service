@@ -9,7 +9,6 @@ import ru.nsu.fit.directors.userservice.repository.CompanyRepository;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.security.Security;
 import java.util.List;
 
 @RequiredArgsConstructor
