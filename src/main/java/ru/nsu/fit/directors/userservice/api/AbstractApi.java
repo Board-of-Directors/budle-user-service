@@ -13,7 +13,6 @@ import ru.nsu.fit.directors.userservice.exception.ServerNotAvailableException;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -25,15 +24,24 @@ public class AbstractApi implements DefaultApi {
     }
 
     @Nullable
-    public <T> T syncGetWithParams(String path, Map<String, ?> params, Class<T> type) {
-        ParameterizedTypeReference<BaseResponse<T>> reference = new ParameterizedTypeReference<>() {
-        };
+    public <T> T syncGetWithParams(
+        Function<UriBuilder, URI> uriBuilder,
+        ParameterizedTypeReference<BaseResponse<T>> reference
+    ) {
         return Optional.ofNullable(webClient.build()
                 .get()
-                .uri(path, params)
+                .uri(uriBuilder)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .onStatus(HttpStatusCode::is5xxServerError, response -> response.bodyToMono(String.class).map(ServerNotAvailableException::new))
+                .onStatus(
+                    HttpStatusCode::is4xxClientError,
+                    response -> response.bodyToMono(BaseResponse.class)
+                        .map(resp -> new ClientException(resp.getException().getMessage()))
+                )
+                .onStatus(
+                    HttpStatusCode::is5xxServerError,
+                    response -> response.bodyToMono(String.class).map(ServerNotAvailableException::new)
+                )
                 .toEntity(reference)
                 .block())
             .map(ResponseEntity::getBody)
