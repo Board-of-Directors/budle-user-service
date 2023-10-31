@@ -3,6 +3,7 @@ package ru.nsu.fit.directors.userservice.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(matcher -> matcher.requestMatchers("/user/login", "/user/register", "/user/swagger-ui/**", "/user/api-docs/**")
                 .permitAll()
                 .anyRequest()
@@ -26,7 +27,8 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> {};
+        return web -> {
+        };
     }
 
     @Bean
