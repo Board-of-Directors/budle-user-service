@@ -3,6 +3,7 @@ package ru.nsu.fit.directors.userservice.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,7 +24,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors(configurer -> configurer.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(matcher -> matcher.requestMatchers("/user/login", "/user/register", "/user/swagger-ui/**", "/user/api-docs/**")
+            .authorizeHttpRequests(matcher -> matcher
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/user/login", "/user/register", "/user/swagger-ui/**", "/user/api-docs/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -35,6 +38,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedOrigins(List.of("http://localhost:10888"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(List.of("*"));

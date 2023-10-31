@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "user/order", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(allowCredentials = "true", originPatterns = {"*"}, allowedHeaders = {"*"})
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"}, allowedHeaders = {"*"}, origins = {"http://localhost:10888"})
 public class OrderController {
     private final OrderService orderService;
 
