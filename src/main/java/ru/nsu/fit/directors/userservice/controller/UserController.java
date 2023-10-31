@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import ru.nsu.fit.directors.userservice.service.UserService;
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class UserController {
     private final UserService userService;
     private final SecurityService securityService;

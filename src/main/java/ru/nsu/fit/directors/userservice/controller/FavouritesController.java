@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/favourite")
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class FavouritesController {
     private final FavouritesService favouritesService;
 

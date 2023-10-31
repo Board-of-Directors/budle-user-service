@@ -2,6 +2,7 @@ package ru.nsu.fit.directors.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user/notification")
 @RequiredArgsConstructor
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class NotificationController {
     private final NotificationService notificationService;
 

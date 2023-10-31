@@ -2,6 +2,7 @@ package ru.nsu.fit.directors.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "user/order", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class OrderController {
     private final OrderService orderService;
 
