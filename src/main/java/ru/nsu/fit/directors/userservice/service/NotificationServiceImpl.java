@@ -7,7 +7,6 @@ import ru.nsu.fit.directors.userservice.event.OrderNotificationEvent;
 import ru.nsu.fit.directors.userservice.model.Notification;
 import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.repository.NotificationRepository;
-import ru.nsu.fit.directors.userservice.repository.ReactiveNotificationRepository;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -18,7 +17,6 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
-    private final ReactiveNotificationRepository reactiveNotificationRepository;
     private final UserRepository userRepository;
     private final SecurityService securityService;
 
@@ -43,16 +41,18 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Flux<NotificationDto> getFluxNotifications() {
-        return reactiveNotificationRepository.findByUserAndWasReceived(
-                securityService.getLoggedInUser(),
-                false
-            )
-            .map(notification -> {
-                    notification.setWasReceived(true);
-                    reactiveNotificationRepository.save(notification);
-                    return new NotificationDto(notification.getMessage());
-                }
-            );
+        return Flux.fromStream(notificationRepository.findByUserAndWasReceived(
+                    securityService.getLoggedInUser(),
+                    false
+                )
+                .stream()
+                .map(notification -> {
+                        notification.setWasReceived(true);
+                        notificationRepository.save(notification);
+                        return new NotificationDto(notification.getMessage());
+                    }
+                )
+        );
 
     }
 }
