@@ -21,7 +21,7 @@ public class WebMvcConfiguration {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@Nonnull CorsRegistry registry) {
-                registry.addMapping("/**").allowedOriginPatterns("*").allowCredentials(true);
+                registry.addMapping("/**").allowedOriginPatterns("*").allowedHeaders("*").allowCredentials(true);
             }
         };
     }
@@ -32,6 +32,7 @@ public class WebMvcConfiguration {
         configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

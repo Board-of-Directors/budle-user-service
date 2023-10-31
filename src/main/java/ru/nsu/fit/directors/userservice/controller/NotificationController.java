@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user/notification")
 @RequiredArgsConstructor
-@CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"}, allowedHeaders = {"*"})
 public class NotificationController {
     private final NotificationService notificationService;
 
