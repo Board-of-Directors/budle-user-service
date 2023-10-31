@@ -22,4 +22,5 @@ public interface SecurityService {
 
     void autoLogin(String username, String password, HttpServletRequest request);
 
+    void logout(HttpServletRequest httpServletRequest);
 }

@@ -60,6 +60,11 @@ public class UserController {
         return true;
     }
 
+    @PostMapping(value = "/logout")
+    public void logout() {
+        securityService.logout(httpServletRequest);
+    }
+
     /**
      * Get request for user information.
      *

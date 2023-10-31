@@ -60,4 +60,14 @@ public class SecurityServiceImpl implements SecurityService {
             session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
         }
     }
+
+    @Override
+    public void logout(HttpServletRequest httpServletRequest) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(null);
+        SecurityContextHolder.getContext().setAuthentication(null);
+        HttpSession session = httpServletRequest.getSession();
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
+    }
 }
