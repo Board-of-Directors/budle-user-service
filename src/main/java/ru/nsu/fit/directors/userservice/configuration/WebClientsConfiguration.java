@@ -43,6 +43,18 @@ public class WebClientsConfiguration {
             .exchangeStrategies(strategies);
     }
 
+    @Bean
+    public WebClient vkApiClient() {
+        final ExchangeStrategies strategies = ExchangeStrategies.builder()
+            .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(SIZE))
+            .build();
+        return WebClient.builder()
+            .baseUrl("https://api.vk.com")
+            .clientConnector(getReactorClientHttpConnector())
+            .exchangeStrategies(strategies)
+            .build();
+    }
+
 
     private ReactorClientHttpConnector getReactorClientHttpConnector() {
         return new ReactorClientHttpConnector(

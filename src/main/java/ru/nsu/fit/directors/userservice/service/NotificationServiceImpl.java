@@ -1,8 +1,11 @@
 package ru.nsu.fit.directors.userservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import ru.nsu.fit.directors.userservice.api.VkApi;
+import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
 import ru.nsu.fit.directors.userservice.event.OrderNotificationEvent;
 import ru.nsu.fit.directors.userservice.model.Notification;
 import ru.nsu.fit.directors.userservice.model.User;
@@ -19,11 +22,21 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final SecurityService securityService;
+    private final VkApi vkApi;
+
+    @Value("${vk.api.service-key}")
+    private String vkServiceKey;
 
     @Override
     public void handleOrderNotification(OrderNotificationEvent event) {
         User user = userRepository.findById(event.userId()).orElseThrow();
-        notificationRepository.save(new Notification().setUser(user).setMessage(event.message()).setWasReceived(false));
+        if (user.getVkUserId() != null) {
+            vkApi.sendNotification(
+                new RequestVkNotification(event.message(), vkServiceKey, List.of(user.getVkUserId()))
+            );
+        } else {
+            notificationRepository.save(new Notification().setUser(user).setMessage(event.message()).setWasReceived(false));
+        }
     }
 
     @Override

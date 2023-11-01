@@ -19,4 +19,5 @@ public class RequestUserDto {
     @NotNull(message = "Номер телефона не может быть пустым")
     @Size(min = 11, message = "Номер телефона не может быть короче 11 символов")
     private String phoneNumber;
+    private Long vkUserId;
 }

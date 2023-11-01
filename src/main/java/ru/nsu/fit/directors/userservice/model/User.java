@@ -30,10 +30,11 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     private String username;
     private String phoneNumber;
     private String password;
+    private Long vkUserId;
     @ManyToMany
     @JoinTable(
         name = "favourite_companies",
