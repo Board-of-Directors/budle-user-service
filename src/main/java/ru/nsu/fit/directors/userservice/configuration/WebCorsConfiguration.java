@@ -10,7 +10,7 @@ import java.util.List;
 
 @Configuration
 public class WebCorsConfiguration {
-    @Bean
+   /* @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of("*"));
@@ -24,4 +24,6 @@ public class WebCorsConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    */
 }
