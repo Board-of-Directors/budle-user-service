@@ -2,7 +2,6 @@ package ru.nsu.fit.directors.userservice.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.ws.rs.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
+import ru.nsu.fit.directors.userservice.exception.UserNotLoggedInException;
 import ru.nsu.fit.directors.userservice.model.User;
 
 @Service
@@ -30,8 +30,7 @@ public class SecurityServiceImpl implements SecurityService {
             log.info(user.getUsername());
             return user;
         }
-        log.warn("Info is not instance of user details");
-        throw new BadRequestException("User not logged in");
+        throw new UserNotLoggedInException();
     }
 
     @Override
