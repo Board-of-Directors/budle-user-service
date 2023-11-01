@@ -23,7 +23,6 @@ import ru.nsu.fit.directors.userservice.service.UserService;
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(allowCredentials = "true", originPatterns = {"*"}, allowedHeaders = {"*"})
 public class UserController {
     private final UserService userService;
     private final SecurityService securityService;
