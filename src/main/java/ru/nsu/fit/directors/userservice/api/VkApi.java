@@ -9,16 +9,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
 import ru.nsu.fit.directors.userservice.dto.response.VkNotificationResponse;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class VkApi {
     private final WebClient vkApiClient;
 
-    public List<VkNotificationResponse> sendNotification(RequestVkNotification requestVkNotification) {
-        ParameterizedTypeReference<List<VkNotificationResponse>> reference = new ParameterizedTypeReference<>() {};
+    public VkNotificationResponse sendNotification(RequestVkNotification requestVkNotification) {
+        ParameterizedTypeReference<VkNotificationResponse> reference = new ParameterizedTypeReference<>() {};
         return vkApiClient.post()
             .uri(uriBuilder -> uriBuilder.path("/method/notifications.sendMessage").build())
             .contentType(MediaType.APPLICATION_JSON)

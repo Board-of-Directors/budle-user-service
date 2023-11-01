@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.userservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -18,6 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
@@ -31,12 +33,21 @@ public class NotificationServiceImpl implements NotificationService {
     public void handleOrderNotification(OrderNotificationEvent event) {
         User user = userRepository.findById(event.userId()).orElseThrow();
         if (user.getVkUserId() != null) {
-            vkApi.sendNotification(
-                new RequestVkNotification(event.message(), vkServiceKey, List.of(user.getVkUserId()))
-            );
+            try {
+                vkApi.sendNotification(
+                    new RequestVkNotification(event.message(), vkServiceKey, String.valueOf(user.getVkUserId()))
+                );
+            } catch (Exception e) {
+                saveNotification(event, user);
+                log.error(e.getMessage());
+            }
         } else {
-            notificationRepository.save(new Notification().setUser(user).setMessage(event.message()).setWasReceived(false));
+            saveNotification(event, user);
         }
+    }
+
+    private void saveNotification(OrderNotificationEvent event, User user) {
+        notificationRepository.save(new Notification().setUser(user).setMessage(event.message()).setWasReceived(false));
     }
 
     @Override
