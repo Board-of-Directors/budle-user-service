@@ -19,4 +19,5 @@ public class ResponseOrderDto {
     private Integer status;
     private Long establishmentId;
     private String guestName;
+    private String image = null;
 }
