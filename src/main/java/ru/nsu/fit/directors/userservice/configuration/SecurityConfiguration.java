@@ -14,7 +14,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,12 +24,13 @@ public class SecurityConfiguration {
         return http.cors(configurer -> configurer.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(matcher -> matcher
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/user/login", "/user/register", "/user/swagger-ui/**", "/user/api-docs/**")
                 .permitAll()
+                .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest()
                 .authenticated()
             )
+            .cors(configurer -> configurer.configurationSource(corsConfigurationSource()))
             .build();
     }
 
@@ -39,7 +39,8 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.setAllowedOrigins(List.of("http://localhost:10888"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        configuration.setAllowedMethods(List.of(CorsConfiguration.ALL));
+        configuration.setExposedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setMaxAge(3600L);
