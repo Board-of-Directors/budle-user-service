@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/favourite")
-@CrossOrigin(allowCredentials = "true", originPatterns = {"*"}, allowedHeaders = {"*"}, origins = {"http://localhost:10888"})
+@CrossOrigin(allowCredentials = "true", originPatterns = {"*"}, allowedHeaders = {"*"})
 public class FavouritesController {
     private final FavouritesService favouritesService;
 
