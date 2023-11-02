@@ -39,8 +39,8 @@ jobs:
         with:
           context: .
           push: true
-          cache-from: type=registry,ref=fagorym/user-service:latest
-          cache-to: type=inline
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/arm64,linux/amd64
