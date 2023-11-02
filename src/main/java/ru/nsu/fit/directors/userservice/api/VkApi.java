@@ -6,6 +6,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
 import ru.nsu.fit.directors.userservice.dto.response.VkNotificationResponse;
 
@@ -21,7 +22,7 @@ public class VkApi {
         return vkApiClient.post()
             .uri(uriBuilder -> uriBuilder.path("/method/notifications.sendMessage").build())
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(requestVkNotification)
+            .body(Mono.just(requestVkNotification), RequestVkNotification.class)
             .retrieve()
             .toEntity(reference)
             .log()
