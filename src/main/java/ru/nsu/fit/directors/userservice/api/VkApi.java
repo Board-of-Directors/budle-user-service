@@ -16,6 +16,7 @@ public class VkApi {
     private final WebClient vkApiClient;
 
     public VkNotificationResponse sendNotification(RequestVkNotification requestVkNotification) {
+        log.info("Send vk notification {}", requestVkNotification);
         ParameterizedTypeReference<VkNotificationResponse> reference = new ParameterizedTypeReference<>() {};
         return vkApiClient.post()
             .uri(uriBuilder -> uriBuilder.path("/method/notifications.sendMessage").build())
