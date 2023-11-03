@@ -5,4 +5,5 @@ public record RequestVkNotification(
     String access_token,
     String user_ids
 ) {
+
 }
