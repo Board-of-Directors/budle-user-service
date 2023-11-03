@@ -9,6 +9,7 @@ import ru.nsu.fit.directors.userservice.api.OrderApi;
 import ru.nsu.fit.directors.userservice.dto.request.RequestOrderDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.userservice.event.OrderCancelledEvent;
+import ru.nsu.fit.directors.userservice.event.OrderConfirmedEvent;
 import ru.nsu.fit.directors.userservice.event.OrderEvent;
 import ru.nsu.fit.directors.userservice.exception.OrderBookingTimeException;
 import ru.nsu.fit.directors.userservice.mapper.OrderMapper;
@@ -56,6 +57,13 @@ public class OrderServiceImpl implements OrderService {
             new ParameterizedTypeReference<>() {}
         );
 
+    }
+
+    @Override
+    public void confirmOrder(Long orderId) {
+        validateUserOrder(orderId);
+        kafkaTemplate.send("orderTopic", new OrderConfirmedEvent()
+            .setOrderId(orderId));
     }
 
     private void validateUserOrder(Long orderId) {

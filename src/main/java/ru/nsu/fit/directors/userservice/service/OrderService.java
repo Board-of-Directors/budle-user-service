@@ -13,4 +13,6 @@ public interface OrderService {
     void cancelOrder(Long orderId);
 
     List<ResponseOrderDto> getOrders(Integer status);
+
+    void confirmOrder(Long orderId);
 }

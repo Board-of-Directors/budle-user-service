@@ -2,7 +2,6 @@ package ru.nsu.fit.directors.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,5 +50,15 @@ public class OrderController {
     @GetMapping
     public List<ResponseOrderDto> getOrders(@RequestParam(required = false) Integer status) {
         return orderService.getOrders(status);
+    }
+
+    /**
+     * Put request for confirming order.
+     *
+     * @param orderId identifier of order to confirm order.
+     */
+    @PutMapping(value = "/confirm")
+    public void confirmOrder(@RequestParam Long orderId) {
+        orderService.confirmOrder(orderId);
     }
 }
