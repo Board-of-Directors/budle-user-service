@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.userservice.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,7 +36,7 @@ public class User implements UserDetails {
     private String phoneNumber;
     private String password;
     private Long vkUserId;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "favourite_companies",
         joinColumns = @JoinColumn(name = "user_id"),
