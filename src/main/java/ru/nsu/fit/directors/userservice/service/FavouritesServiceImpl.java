@@ -35,7 +35,7 @@ public class FavouritesServiceImpl implements FavouritesService {
     @Transactional
     public void deleteFromFavourites(Long establishmentId) {
         User loggedUser = securityService.getLoggedInUser();
-        loggedUser.getFavourites().remove(new Company().setId(establishmentId));
+        loggedUser.getFavourites().remove(companyRepository.findById(establishmentId).orElseThrow());
         userRepository.save(loggedUser);
     }
 
@@ -43,6 +43,6 @@ public class FavouritesServiceImpl implements FavouritesService {
     @Transactional
     public List<Company> getFavourites() {
         User loggedUser = securityService.getLoggedInUser();
-        return companyService.getCompaniesByIds(loggedUser.getFavourites().stream().map(Company::getId));
+        return companyService.getCompaniesByIds(loggedUser.getFavourites().stream().map(Company::getId).toList());
     }
 }
