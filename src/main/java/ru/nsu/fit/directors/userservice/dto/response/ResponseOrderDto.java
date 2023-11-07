@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ResponseOrderDto {
@@ -20,4 +21,5 @@ public class ResponseOrderDto {
     private Long establishmentId;
     private String guestName;
     private String image = null;
+    private List<ActionDto> userActionList;
 }
