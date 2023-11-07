@@ -32,16 +32,15 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void handleOrderNotification(OrderNotificationEvent event) {
         User user = userRepository.findById(event.userId()).orElseThrow();
-        if (user.getVkUserId() != null) {
-            try {
+        try {
+            if (user.getVkUserId() != null) {
                 vkApi.sendNotification(
                     new RequestVkNotification(event.message(), vkServiceKey, String.valueOf(user.getVkUserId()))
                 );
-            } catch (Exception e) {
-                saveNotification(event, user);
-                log.error(e.getMessage());
             }
-        } else {
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        } finally {
             saveNotification(event, user);
         }
     }
