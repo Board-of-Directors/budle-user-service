@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.userservice.api.EstablishmentApi;
+import ru.nsu.fit.directors.userservice.dto.CompanyDto;
 import ru.nsu.fit.directors.userservice.model.Company;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class CompanyService {
         );
     }
 
-    public List<Company> getCompaniesByIds(List<Long> ids) {
+    public List<CompanyDto> getCompaniesByIds(List<Long> ids) {
         return establishmentApi.syncListGetWithParams(
             uriBuilder -> uriBuilder.path("/internal/establishment").queryParam("ids", ids).build(),
             new ParameterizedTypeReference<>() {}

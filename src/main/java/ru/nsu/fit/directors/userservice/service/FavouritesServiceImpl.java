@@ -3,6 +3,7 @@ package ru.nsu.fit.directors.userservice.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.directors.userservice.dto.CompanyDto;
 import ru.nsu.fit.directors.userservice.model.Company;
 import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.repository.CompanyRepository;
@@ -41,7 +42,7 @@ public class FavouritesServiceImpl implements FavouritesService {
 
     @Override
     @Transactional
-    public List<Company> getFavourites() {
+    public List<CompanyDto> getFavourites() {
         User loggedUser = securityService.getLoggedInUser();
         return companyService.getCompaniesByIds(loggedUser.getFavourites().stream().map(Company::getId).toList());
     }

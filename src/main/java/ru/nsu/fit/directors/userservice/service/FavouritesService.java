@@ -1,6 +1,6 @@
 package ru.nsu.fit.directors.userservice.service;
 
-import ru.nsu.fit.directors.userservice.model.Company;
+import ru.nsu.fit.directors.userservice.dto.CompanyDto;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -11,5 +11,5 @@ public interface FavouritesService {
 
     void deleteFromFavourites(Long establishmentId);
 
-    List<Company> getFavourites();
+    List<CompanyDto> getFavourites();
 }
