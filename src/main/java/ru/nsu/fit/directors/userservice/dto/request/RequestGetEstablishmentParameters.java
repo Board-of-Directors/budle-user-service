@@ -26,5 +26,6 @@ public record RequestGetEstablishmentParameters(
         limit = limit == null ? 100 : limit;
         sortValue = sortValue == null ? "name" : sortValue;
         workingDayCount = workingDayCount == null ? 7 : workingDayCount;
+        category = category == null ? "" : category;
     }
 }
