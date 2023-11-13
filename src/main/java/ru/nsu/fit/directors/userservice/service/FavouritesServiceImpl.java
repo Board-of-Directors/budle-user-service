@@ -11,6 +11,7 @@ import ru.nsu.fit.directors.userservice.repository.CompanyService;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -46,4 +47,16 @@ public class FavouritesServiceImpl implements FavouritesService {
         User loggedUser = securityService.getLoggedInUser();
         return companyService.getCompaniesByIds(loggedUser.getFavourites().stream().map(Company::getId).toList());
     }
+
+    @Override
+    public List<Long> getFavouritesIds() {
+        try {
+            User loggedUser = securityService.getLoggedInUser();
+            return loggedUser.getFavourites().stream().map(Company::getId).toList();
+        } catch (Exception ex) {
+            return Collections.emptyList();
+        }
+    }
+
+
 }

@@ -12,4 +12,6 @@ public interface FavouritesService {
     void deleteFromFavourites(Long establishmentId);
 
     List<CompanyDto> getFavourites();
+
+    List<Long> getFavouritesIds();
 }
