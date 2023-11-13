@@ -27,7 +27,7 @@ public class EstablishmentServiceImpl implements EstablishmentService {
                 .build(),
             new ParameterizedTypeReference<>() {
             });
-        establishmentInfoList.establishmentInfoList().forEach(
+        establishmentInfoList.establishments().forEach(
             info -> info.setFavourite(favouritesService.getFavouritesIds().contains(info.getId()))
         );
         return establishmentInfoList;

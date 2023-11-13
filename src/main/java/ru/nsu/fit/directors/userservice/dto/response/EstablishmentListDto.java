@@ -4,6 +4,6 @@ import java.util.List;
 
 public record EstablishmentListDto(
     int count,
-    List<ResponseBasicEstablishmentInfo> establishmentInfoList
+    List<ResponseBasicEstablishmentInfo> establishments
 ) {
 }
