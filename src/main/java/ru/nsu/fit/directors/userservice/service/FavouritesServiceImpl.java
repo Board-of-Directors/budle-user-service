@@ -29,8 +29,10 @@ public class FavouritesServiceImpl implements FavouritesService {
         User loggedUser = securityService.getLoggedInUser();
         Company company = companyService.getCompanyById(establishmentId);
         company = companyRepository.save(company);
-        loggedUser.getFavourites().add(company);
-        userRepository.save(loggedUser);
+        if (!loggedUser.getFavourites().contains(company)) {
+            loggedUser.getFavourites().add(company);
+            userRepository.save(loggedUser);
+        }
     }
 
     @Override

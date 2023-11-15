@@ -12,6 +12,7 @@ import ru.nsu.fit.directors.userservice.event.OrderCancelledEvent;
 import ru.nsu.fit.directors.userservice.event.OrderConfirmedEvent;
 import ru.nsu.fit.directors.userservice.event.OrderEvent;
 import ru.nsu.fit.directors.userservice.exception.OrderBookingTimeException;
+import ru.nsu.fit.directors.userservice.exception.OrderManageException;
 import ru.nsu.fit.directors.userservice.mapper.OrderMapper;
 import ru.nsu.fit.directors.userservice.model.User;
 
