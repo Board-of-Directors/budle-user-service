@@ -8,6 +8,7 @@ import ru.nsu.fit.directors.userservice.dto.request.RequestGetEstablishmentParam
 import ru.nsu.fit.directors.userservice.dto.response.EstablishmentListDto;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -20,10 +21,10 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     public EstablishmentListDto getEstablishmentByParams(RequestGetEstablishmentParameters parameters) {
         EstablishmentListDto establishmentInfoList = establishmentApi.syncGetWithParams(
             uriBuilder -> uriBuilder.path("/establishment/all")
-                .queryParam("name", parameters.name())
-                .queryParam("hasMap", parameters.hasMap())
-                .queryParam("hasCardPayment", parameters.hasCardPayment())
-                .queryParam("category", parameters.category())
+                .queryParamIfPresent("name", Optional.ofNullable(parameters.name()))
+                .queryParamIfPresent("hasMap", Optional.ofNullable(parameters.hasMap()))
+                .queryParamIfPresent("hasCardPayment", Optional.ofNullable(parameters.hasCardPayment()))
+                .queryParamIfPresent("category", Optional.ofNullable(parameters.category()))
                 .build(),
             new ParameterizedTypeReference<>() {
             });

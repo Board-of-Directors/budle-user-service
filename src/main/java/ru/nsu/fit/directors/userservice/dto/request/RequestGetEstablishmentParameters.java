@@ -19,13 +19,4 @@ public record RequestGetEstablishmentParameters(
     @Min(value = 1, message = "Лимит не может быть меньше единицы.") Integer limit,
     String sortValue
 ) {
-
-    public RequestGetEstablishmentParameters {
-        name = name == null ? "" : name;
-        offset = offset == null ? 0 : offset;
-        limit = limit == null ? 100 : limit;
-        sortValue = sortValue == null ? "name" : sortValue;
-        workingDayCount = workingDayCount == null ? 7 : workingDayCount;
-        category = category == null ? "" : category;
-    }
 }
