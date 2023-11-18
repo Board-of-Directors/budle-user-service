@@ -46,7 +46,13 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void saveNotification(OrderNotificationEvent event, User user) {
-        notificationRepository.save(new Notification().setUser(user).setMessage(event.message()).setWasReceived(false));
+        notificationRepository.save(
+            new Notification()
+                .setUser(user)
+                .setMessage(event.message())
+                .setOrderId(event.orderId())
+                .setWasReceived(false)
+        );
     }
 
     @Override
@@ -64,18 +70,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Flux<NotificationDto> getFluxNotifications() {
-        return Flux.fromStream(notificationRepository.findByUserAndWasReceived(
-                    securityService.getLoggedInUser(),
-                    false
-                )
-                .stream()
-                .map(notification -> {
-                        notification.setWasReceived(true);
-                        notificationRepository.save(notification);
-                        return new NotificationDto(notification.getMessage());
-                    }
-                )
-        );
-
+        return Flux.fromIterable(getNotifications());
     }
 }

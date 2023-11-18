@@ -22,6 +22,7 @@ public class Notification {
     private Long id;
     private String message;
     private boolean wasReceived;
+    private Long orderId;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
