@@ -11,6 +11,7 @@ import ru.nsu.fit.directors.userservice.repository.CompanyService;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class FavouritesServiceImpl implements FavouritesService {
         User loggedUser = securityService.getLoggedInUser();
         Company company = companyService.getCompanyById(establishmentId);
         company = companyRepository.save(company);
+        if (loggedUser.getFavourites() == null) {
+            loggedUser.setFavourites(new ArrayList<>());
+        }
         if (!loggedUser.getFavourites().contains(company)) {
             loggedUser.getFavourites().add(company);
             userRepository.save(loggedUser);
