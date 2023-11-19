@@ -3,16 +3,20 @@ package ru.nsu.fit.directors.userservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import ru.nsu.fit.directors.userservice.api.OrderApi;
 import ru.nsu.fit.directors.userservice.api.VkApi;
 import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
+import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.userservice.event.OrderNotificationEvent;
 import ru.nsu.fit.directors.userservice.model.Notification;
 import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.repository.NotificationRepository;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final UserRepository userRepository;
     private final SecurityService securityService;
     private final VkApi vkApi;
+    private final OrderApi orderApi;
 
     @Value("${vk.api.service-key}")
     private String vkServiceKey;
@@ -64,8 +69,22 @@ public class NotificationServiceImpl implements NotificationService {
         notifications.forEach(notification -> notification.setWasReceived(true));
         notificationRepository.saveAll(notifications);
         return notifications.stream()
-            .map(notification -> new NotificationDto(notification.getMessage()))
+            .map(notification ->
+                new NotificationDto(notification.getMessage(), enrichOrderData(notification.getOrderId()))
+            )
             .toList();
+    }
+
+    public ResponseOrderDto enrichOrderData(@Nullable Long orderId) {
+        if (orderId != null) {
+            return orderApi.syncGetWithParams(
+                uriBuilder -> uriBuilder.path("id").queryParam("id", orderId).build(),
+                new ParameterizedTypeReference<>() {
+                }
+            );
+        } else {
+            return null;
+        }
     }
 
     @Override

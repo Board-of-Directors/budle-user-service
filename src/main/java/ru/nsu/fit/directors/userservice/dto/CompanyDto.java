@@ -7,6 +7,9 @@ public record CompanyDto(
     Boolean hasMap,
     Boolean hasCardPayment,
     String name,
-    Long id
+    Long id,
+    String category,
+    String cuisineCountry,
+    String starsCount
 ) {
 }
