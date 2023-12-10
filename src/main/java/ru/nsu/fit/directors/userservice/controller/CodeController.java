@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.userservice.controller;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +18,7 @@ import ru.nsu.fit.directors.userservice.service.CodeService;
  */
 @RestController
 @RequestMapping(value = "/user/code", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
+@RequiredArgsConstructor
 @CrossOrigin(allowCredentials = "true", originPatterns = {"*"})
 public class CodeController {
     private final CodeService codeService;

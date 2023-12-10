@@ -17,14 +17,19 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(matcher -> matcher
-                .requestMatchers("/user/login", "/user/register", "/user/swagger-ui/**", "/user/api-docs/**")
+                .requestMatchers(
+                    "/user/login",
+                    "/user/register",
+                    "/user/swagger-ui/**",
+                    "/user/api-docs/**",
+                    "/user/code"
+                )
                 .permitAll()
                 .anyRequest()
                 .authenticated()
             )
             .build();
     }
-
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
