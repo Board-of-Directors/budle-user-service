@@ -24,10 +24,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.userservice.exception.BaseException;
 import ru.nsu.fit.directors.userservice.exception.ClientException;
+import ru.nsu.fit.directors.userservice.exception.IncorrectPhoneNumberFormatException;
 import ru.nsu.fit.directors.userservice.exception.OrderBookingTimeException;
 import ru.nsu.fit.directors.userservice.exception.ServerNotAvailableException;
 import ru.nsu.fit.directors.userservice.exception.UserAlreadyExistsException;
 import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
+import ru.nsu.fit.directors.userservice.exception.VerificationCodeWasFalseException;
 import ru.nsu.fit.directors.userservice.exception.WrongCredentialsException;
 
 import java.util.LinkedHashMap;
@@ -43,7 +45,9 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         WrongCredentialsException.class,
         OrderBookingTimeException.class,
         ServerNotAvailableException.class,
-        ClientException.class
+        ClientException.class,
+        VerificationCodeWasFalseException.class,
+        IncorrectPhoneNumberFormatException.class
     })
     public <T extends BaseException> ResponseEntity<BaseResponse<Object>> handleException(T e) {
         BaseResponse<Object> response = new BaseResponse<>(e.getMessage(), e.getType());
@@ -106,7 +110,6 @@ public class ArticleController extends ResponseEntityExceptionHandler implements
         BaseResponse<Object> response = new BaseResponse<>(message, NOT_VALID_EXCEPTION);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     @NonNull
     private String getDefaultMessage(BindException ex) {
