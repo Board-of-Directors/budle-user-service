@@ -17,6 +17,7 @@ import ru.nsu.fit.directors.userservice.mapper.OrderMapper;
 import ru.nsu.fit.directors.userservice.model.User;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -48,14 +49,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Nonnull
-    public List<ResponseOrderDto> getOrders(Integer status) {
+    public List<ResponseOrderDto> getOrders(@Nullable Integer status) {
         User loggedUser = securityService.getLoggedInUser();
         return orderApi.syncListGetWithParams(
             uriBuilder -> uriBuilder.path("/order")
                 .queryParam("userId", loggedUser.getId())
-                .queryParam("status", status)
+                .queryParamIfPresent("status", Optional.ofNullable(status))
                 .build(),
-            new ParameterizedTypeReference<>() {}
+            new ParameterizedTypeReference<>() {
+            }
         );
 
     }
@@ -94,7 +96,8 @@ public class OrderServiceImpl implements OrderService {
             uriBuilder -> uriBuilder.path("/establishment/internal/time")
                 .queryParam("establishmentId", requestOrderDto.getEstablishmentId())
                 .build(),
-            new ParameterizedTypeReference<>() {}
+            new ParameterizedTypeReference<>() {
+            }
         );
     }
 }
