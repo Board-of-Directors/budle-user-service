@@ -22,4 +22,8 @@ public class ResponseOrderDto {
     private String guestName;
     private String image = null;
     private List<ActionDto> userActionList;
+    private String starsCount;
+    private String cuisineCountry;
+    private String category;
+    private String name;
 }
