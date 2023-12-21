@@ -78,7 +78,7 @@ public class NotificationServiceImpl implements NotificationService {
     public ResponseOrderDto enrichOrderData(@Nullable Long orderId) {
         if (orderId != null) {
             return orderApi.syncGetWithParams(
-                uriBuilder -> uriBuilder.path("id").queryParam("id", orderId).build(),
+                uriBuilder -> uriBuilder.path("/order/id").queryParam("id", orderId).build(),
                 new ParameterizedTypeReference<>() {
                 }
             );
