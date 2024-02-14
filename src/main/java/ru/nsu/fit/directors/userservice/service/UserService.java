@@ -1,20 +1,24 @@
 package ru.nsu.fit.directors.userservice.service;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
-import ru.nsu.fit.directors.userservice.dto.request.RequestUserDto;
-import ru.nsu.fit.directors.userservice.dto.response.ResponseUserDto;
+import ru.nsu.fit.directors.userservice.model.User;
 
-/**
- * Service that responsible for users.
- */
+@ParametersAreNonnullByDefault
 public interface UserService {
+    /**
+     * Сохранять пользователя в базе данных.
+     *
+     * @param user информация о новом пользователе
+     */
+    void save(User user);
 
     /**
-     * Function that register new user in our system.
+     * Получить активного пользователя.
      *
-     * @param requestUserDto provide information about new user.
+     * @return данные об активном пользователе
      */
-    void registerUser(RequestUserDto requestUserDto);
-
-    ResponseUserDto getLoggedInUser();
+    @Nonnull
+    User getLoggedInUser();
 }

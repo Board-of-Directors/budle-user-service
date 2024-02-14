@@ -6,8 +6,12 @@ import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.userservice.api.EstablishmentApi;
 import ru.nsu.fit.directors.userservice.dto.request.RequestGetEstablishmentParameters;
 import ru.nsu.fit.directors.userservice.dto.response.EstablishmentListDto;
+import ru.nsu.fit.directors.userservice.dto.response.ResponseReviewDto;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -17,6 +21,7 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     private final EstablishmentApi establishmentApi;
     private final FavouritesService favouritesService;
 
+    @Nonnull
     @Override
     public EstablishmentListDto getEstablishmentByParams(RequestGetEstablishmentParameters parameters) {
         EstablishmentListDto establishmentInfoList = establishmentApi.syncGetWithParams(
@@ -27,10 +32,23 @@ public class EstablishmentServiceImpl implements EstablishmentService {
                 .queryParamIfPresent("category", Optional.ofNullable(parameters.category()))
                 .build(),
             new ParameterizedTypeReference<>() {
-            });
+            }
+        );
         establishmentInfoList.establishments().forEach(
             info -> info.setFavourite(favouritesService.getFavouritesIds().contains(info.getId()))
         );
         return establishmentInfoList;
+    }
+
+    @Nonnull
+    @Override
+    public List<ResponseReviewDto> getReviewsByExternalIds(List<Long> externalIds) {
+        return establishmentApi.syncListGetWithParams(
+            uriBuilder -> uriBuilder.path("/internal/review")
+                .queryParam("ids", externalIds)
+                .build(),
+            new ParameterizedTypeReference<>() {
+            }
+        );
     }
 }
