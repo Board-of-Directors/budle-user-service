@@ -13,7 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-@Table("user_review")
+@Table(name = "user_review")
 @Entity
 @Getter
 @Setter
