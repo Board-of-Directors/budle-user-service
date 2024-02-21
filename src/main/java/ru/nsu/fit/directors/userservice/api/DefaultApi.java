@@ -12,9 +12,22 @@ import java.util.function.Function;
 public interface DefaultApi {
 
     @Nullable
-    <T> T syncGetWithParams(Function<UriBuilder, URI> uriBuilder, ParameterizedTypeReference<BaseResponse<T>> reference);
+    <T> T syncGetWithParams(
+        Function<UriBuilder, URI> uriBuilder,
+        ParameterizedTypeReference<BaseResponse<T>> reference
+    );
 
     @Nullable
-    <T> List<T> syncListGetWithParams(Function<UriBuilder, URI> uriBuilder, ParameterizedTypeReference<BaseResponse<List<T>>> reference);
+    <T> List<T> syncListGetWithParams(
+        Function<UriBuilder, URI> uriBuilder,
+        ParameterizedTypeReference<BaseResponse<List<T>>> reference
+    );
+
+    <T, R> T syncPostWithParams(
+        Function<UriBuilder, URI> uriBuilder,
+        R body,
+        ParameterizedTypeReference<R> ref,
+        ParameterizedTypeReference<BaseResponse<T>> reference
+    );
 
 }

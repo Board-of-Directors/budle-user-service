@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import ru.nsu.fit.directors.userservice.dto.request.RequestGetEstablishmentParameters;
+import ru.nsu.fit.directors.userservice.dto.request.ReviewCreationDto;
 import ru.nsu.fit.directors.userservice.dto.response.EstablishmentListDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseReviewDto;
 
@@ -28,4 +29,13 @@ public interface EstablishmentService {
      */
     @Nonnull
     List<ResponseReviewDto> getReviewsByExternalIds(List<Long> externalIds);
+
+    /**
+     * Создать отзыв на заведение.
+     *
+     * @param reviewCreationDto запрос на создание
+     * @return внешний идентификатор
+     */
+    @Nonnull
+    Long createReview(ReviewCreationDto reviewCreationDto);
 }

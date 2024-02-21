@@ -5,6 +5,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.directors.userservice.api.EstablishmentApi;
 import ru.nsu.fit.directors.userservice.dto.request.RequestGetEstablishmentParameters;
+import ru.nsu.fit.directors.userservice.dto.request.ReviewCreationDto;
 import ru.nsu.fit.directors.userservice.dto.response.EstablishmentListDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseReviewDto;
 
@@ -50,5 +51,19 @@ public class EstablishmentServiceImpl implements EstablishmentService {
             new ParameterizedTypeReference<>() {
             }
         );
+    }
+
+    @Nonnull
+    @Override
+    public Long createReview(ReviewCreationDto reviewCreationDto) {
+        return establishmentApi.syncPostWithParams(
+            uriBuilder -> uriBuilder.path("/internal/review").build(),
+            reviewCreationDto,
+            new ParameterizedTypeReference<>() {
+            },
+            new ParameterizedTypeReference<>() {
+            }
+        );
+
     }
 }

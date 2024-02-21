@@ -24,7 +24,8 @@ public class ReviewFacadeImpl implements ReviewFacade {
 
     @Override
     public void createReview(ReviewCreationDto reviewCreationDto) {
-        reviewService.save(new UserReview().setUser(userService.getLoggedInUser()));
+        Long externalId = establishmentService.createReview(reviewCreationDto);
+        reviewService.save(new UserReview().setUser(userService.getLoggedInUser()).setExternalId(externalId));
     }
 
     @Nonnull

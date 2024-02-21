@@ -50,6 +50,35 @@ public class AbstractApi implements DefaultApi {
     }
 
     @Nullable
+    public <T, R> T syncPostWithParams(
+        Function<UriBuilder, URI> uriBuilder,
+        R body,
+        ParameterizedTypeReference<R> ref,
+        ParameterizedTypeReference<BaseResponse<T>> reference
+    ) {
+        return Optional.ofNullable(webClient.build()
+                .post()
+                .uri(uriBuilder)
+                .body(body, ref)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(
+                    HttpStatusCode::is4xxClientError,
+                    response -> response.bodyToMono(BaseResponse.class)
+                        .map(resp -> new ClientException(resp.getException().getMessage()))
+                )
+                .onStatus(
+                    HttpStatusCode::is5xxServerError,
+                    response -> response.bodyToMono(String.class).map(ServerNotAvailableException::new)
+                )
+                .toEntity(reference)
+                .block())
+            .map(ResponseEntity::getBody)
+            .map(BaseResponse::getResult)
+            .orElse(null);
+    }
+
+    @Nullable
     public <T> List<T> syncListGetWithParams(
         Function<UriBuilder, URI> uriBuilder,
         ParameterizedTypeReference<BaseResponse<List<T>>> reference
