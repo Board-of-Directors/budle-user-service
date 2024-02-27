@@ -16,7 +16,7 @@ import ru.nsu.fit.directors.userservice.dto.response.ResponseReviewDto;
 import ru.nsu.fit.directors.userservice.facade.ReviewFacade;
 
 @RestController
-@RequestMapping(value = "/review")
+@RequestMapping(value = "/user/review")
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class ReviewController {
