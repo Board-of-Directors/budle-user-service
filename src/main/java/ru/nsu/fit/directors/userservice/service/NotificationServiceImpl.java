@@ -3,10 +3,9 @@ package ru.nsu.fit.directors.userservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
-import ru.nsu.fit.directors.userservice.api.OrderApi;
+import ru.nsu.fit.directors.userservice.api.OrderServiceClient;
 import ru.nsu.fit.directors.userservice.api.VkApi;
 import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;
@@ -18,19 +17,20 @@ import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
+    private final OrderServiceClient orderServiceClient;
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final SecurityService securityService;
     private final VkApi vkApi;
-    private final OrderApi orderApi;
-
     @Value("${vk.api.service-key}")
     private String vkServiceKey;
 
@@ -76,15 +76,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public ResponseOrderDto enrichOrderData(@Nullable Long orderId) {
-        if (orderId != null) {
-            return orderApi.syncGetWithParams(
-                uriBuilder -> uriBuilder.path("/order/id").queryParam("id", orderId).build(),
-                new ParameterizedTypeReference<>() {
-                }
-            );
-        } else {
-            return null;
-        }
+        return Optional.ofNullable(orderId).map(orderServiceClient::getOrderById).orElse(null);
     }
 
     @Override

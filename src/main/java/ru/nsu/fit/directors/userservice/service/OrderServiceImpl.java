@@ -1,11 +1,10 @@
 package ru.nsu.fit.directors.userservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import ru.nsu.fit.directors.userservice.api.EstablishmentApi;
-import ru.nsu.fit.directors.userservice.api.OrderApi;
+import ru.nsu.fit.directors.userservice.api.EstablishmentServiceClient;
+import ru.nsu.fit.directors.userservice.api.OrderServiceClient;
 import ru.nsu.fit.directors.userservice.dto.request.RequestOrderDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.userservice.event.OrderCancelledEvent;
@@ -19,6 +18,7 @@ import ru.nsu.fit.directors.userservice.model.User;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +30,8 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private final SecurityService securityService;
     private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
-    private final EstablishmentApi establishmentApi;
-    private final OrderApi orderApi;
+    private final EstablishmentServiceClient establishmentServiceClient;
+    private final OrderServiceClient orderServiceClient;
     private final OrderMapper orderMapper;
 
     @Override
@@ -51,15 +51,7 @@ public class OrderServiceImpl implements OrderService {
     @Nonnull
     public List<ResponseOrderDto> getOrders(@Nullable Integer status) {
         User loggedUser = securityService.getLoggedInUser();
-        return orderApi.syncListGetWithParams(
-            uriBuilder -> uriBuilder.path("/order")
-                .queryParam("userId", loggedUser.getId())
-                .queryParamIfPresent("status", Optional.ofNullable(status))
-                .build(),
-            new ParameterizedTypeReference<>() {
-            }
-        );
-
+        return orderServiceClient.getUserOrders(loggedUser.getId(), Optional.ofNullable(status));
     }
 
     @Override
@@ -77,7 +69,6 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderManageException();
 
         }
-
     }
 
     private void validateOrderTime(RequestOrderDto requestOrderDto) {
@@ -92,12 +83,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Nonnull
     private List<LocalDateTime> getValidTimes(RequestOrderDto requestOrderDto) {
-        return establishmentApi.syncListGetWithParams(
-            uriBuilder -> uriBuilder.path("/establishment/internal/time")
-                .queryParam("establishmentId", requestOrderDto.getEstablishmentId())
-                .build(),
-            new ParameterizedTypeReference<>() {
-            }
-        );
+        return establishmentServiceClient.getValidTimes(requestOrderDto.getEstablishmentId());
     }
 }

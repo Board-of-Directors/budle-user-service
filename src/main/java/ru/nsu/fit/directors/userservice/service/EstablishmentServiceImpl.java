@@ -1,9 +1,8 @@
 package ru.nsu.fit.directors.userservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
-import ru.nsu.fit.directors.userservice.api.EstablishmentApi;
+import ru.nsu.fit.directors.userservice.api.EstablishmentServiceClient;
 import ru.nsu.fit.directors.userservice.dto.request.RequestGetEstablishmentParameters;
 import ru.nsu.fit.directors.userservice.dto.request.ReviewCreationDto;
 import ru.nsu.fit.directors.userservice.dto.response.EstablishmentListDto;
@@ -19,21 +18,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class EstablishmentServiceImpl implements EstablishmentService {
-    private final EstablishmentApi establishmentApi;
+    private final EstablishmentServiceClient establishmentClient;
     private final FavouritesService favouritesService;
 
     @Nonnull
     @Override
     public EstablishmentListDto getEstablishmentByParams(RequestGetEstablishmentParameters parameters) {
-        EstablishmentListDto establishmentInfoList = establishmentApi.syncGetWithParams(
-            uriBuilder -> uriBuilder.path("/establishment/all")
-                .queryParamIfPresent("name", Optional.ofNullable(parameters.name()))
-                .queryParamIfPresent("hasMap", Optional.ofNullable(parameters.hasMap()))
-                .queryParamIfPresent("hasCardPayment", Optional.ofNullable(parameters.hasCardPayment()))
-                .queryParamIfPresent("category", Optional.ofNullable(parameters.category()))
-                .build(),
-            new ParameterizedTypeReference<>() {
-            }
+        EstablishmentListDto establishmentInfoList = establishmentClient.searchEstablishments(
+            Optional.ofNullable(parameters.name()),
+            Optional.ofNullable(parameters.hasMap()),
+            Optional.ofNullable(parameters.hasCardPayment()),
+            Optional.ofNullable(parameters.category())
         );
         establishmentInfoList.establishments().forEach(
             info -> info.setFavourite(favouritesService.getFavouritesIds().contains(info.getId()))
@@ -44,26 +39,12 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     @Nonnull
     @Override
     public List<ResponseReviewDto> getReviewsByExternalIds(List<Long> externalIds) {
-        return establishmentApi.syncListGetWithParams(
-            uriBuilder -> uriBuilder.path("/internal/review")
-                .queryParam("ids", externalIds)
-                .build(),
-            new ParameterizedTypeReference<>() {
-            }
-        );
+        return establishmentClient.getReviewsByExternalIds(externalIds);
     }
 
     @Nonnull
     @Override
     public Long createReview(ReviewCreationDto reviewCreationDto) {
-        return establishmentApi.syncPostWithParams(
-            uriBuilder -> uriBuilder.path("/internal/review").build(),
-            reviewCreationDto,
-            new ParameterizedTypeReference<>() {
-            },
-            new ParameterizedTypeReference<>() {
-            }
-        );
-
+        return establishmentClient.createReview(reviewCreationDto);
     }
 }
