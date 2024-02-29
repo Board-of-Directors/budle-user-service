@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
     @Nonnull
     public List<ResponseOrderDto> getOrders(@Nullable Integer status) {
         User loggedUser = securityService.getLoggedInUser();
-        return orderServiceClient.getUserOrders(loggedUser.getId(), Optional.ofNullable(status));
+        return orderServiceClient.getUserOrders(loggedUser.getId(), Optional.ofNullable(status)).getBody().getResult();
     }
 
     @Override

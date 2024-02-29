@@ -29,7 +29,7 @@ public class EstablishmentServiceImpl implements EstablishmentService {
             Optional.ofNullable(parameters.hasMap()),
             Optional.ofNullable(parameters.hasCardPayment()),
             Optional.ofNullable(parameters.category())
-        );
+        ).getBody().getResult();
         establishmentInfoList.establishments().forEach(
             info -> info.setFavourite(favouritesService.getFavouritesIds().contains(info.getId()))
         );

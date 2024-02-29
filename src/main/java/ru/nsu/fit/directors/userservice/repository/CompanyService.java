@@ -14,10 +14,10 @@ public class CompanyService {
     private final EstablishmentServiceClient establishmentServiceClient;
 
     public Company getCompanyById(Long establishmentId) {
-        return establishmentServiceClient.getCompanyById(establishmentId);
+        return establishmentServiceClient.getCompanyById(establishmentId).getBody().getResult();
     }
 
     public List<CompanyDto> getCompaniesByIds(List<Long> ids) {
-        return establishmentServiceClient.getCompaniesByIds(ids);
+        return establishmentServiceClient.getCompaniesByIds(ids).getBody().getResult();
     }
 }
