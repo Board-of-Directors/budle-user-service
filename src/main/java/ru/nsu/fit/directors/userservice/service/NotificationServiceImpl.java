@@ -3,11 +3,13 @@ package ru.nsu.fit.directors.userservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import ru.nsu.fit.directors.userservice.api.OrderServiceClient;
 import ru.nsu.fit.directors.userservice.api.VkApi;
 import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
+import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;
 import ru.nsu.fit.directors.userservice.event.OrderNotificationEvent;
 import ru.nsu.fit.directors.userservice.model.Notification;
@@ -76,7 +78,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public ResponseOrderDto enrichOrderData(@Nullable Long orderId) {
-        return Optional.ofNullable(orderId).map(orderServiceClient::getOrderById).orElse(null);
+        return Optional.ofNullable(orderId).map(orderServiceClient::getOrderById)
+            .map(HttpEntity::getBody).map(
+            BaseResponse::getResult).orElse(null);
     }
 
     @Override

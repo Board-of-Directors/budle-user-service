@@ -28,6 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class OrderServiceImpl implements OrderService {
+    private static final String ORDER_TOPIC = "orderTopic";
     private final SecurityService securityService;
     private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
     private final EstablishmentServiceClient establishmentServiceClient;
@@ -37,14 +38,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createOrder(RequestOrderDto order) {
         validateOrderTime(order);
-        kafkaTemplate.send("orderTopic", orderMapper.toEvent(order, securityService.getLoggedInUser()));
+        kafkaTemplate.send(ORDER_TOPIC, orderMapper.toEvent(order, securityService.getLoggedInUser()));
     }
 
     @Override
     public void cancelOrder(Long orderId) {
         validateUserOrder(orderId);
-        kafkaTemplate.send("orderTopic", new OrderCancelledEvent()
-            .setOrderId(orderId));
+        kafkaTemplate.send(ORDER_TOPIC, new OrderCancelledEvent().setOrderId(orderId));
     }
 
     @Override
@@ -57,8 +57,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void confirmOrder(Long orderId) {
         validateUserOrder(orderId);
-        kafkaTemplate.send("orderTopic", new OrderConfirmedEvent()
-            .setOrderId(orderId));
+        kafkaTemplate.send(ORDER_TOPIC, new OrderConfirmedEvent().setOrderId(orderId));
     }
 
     private void validateUserOrder(Long orderId) {
