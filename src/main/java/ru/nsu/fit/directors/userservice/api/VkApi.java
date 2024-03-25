@@ -12,12 +12,13 @@ import ru.nsu.fit.directors.userservice.dto.response.VkNotificationResponse;
 @RequiredArgsConstructor
 @Slf4j
 public class VkApi {
-    private final WebClient vkApiClient;
+    //private final WebClient vkApiClient;
 
     public VkNotificationResponse sendNotification(RequestVkNotification requestVkNotification) {
         log.info("Send vk notification {}", requestVkNotification);
-        ParameterizedTypeReference<VkNotificationResponse> reference = new ParameterizedTypeReference<>() {};
-        return vkApiClient.post()
+        ParameterizedTypeReference<VkNotificationResponse> reference = new ParameterizedTypeReference<>() {
+        };
+        /*return vkApiClient.post()
             .uri(uriBuilder -> uriBuilder.path("/method/notifications.sendMessage")
                 .queryParam("v", "5.154")
                 .queryParam("access_token", requestVkNotification.access_token())
@@ -26,9 +27,12 @@ public class VkApi {
                 .build())
             .retrieve()
             .toEntity(reference)
-            .log()
+             .log()
             .block()
             .getBody();
+
+         */
+        throw new RuntimeException("Not yet implemented");
     }
 
 }
