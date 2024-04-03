@@ -26,7 +26,7 @@ public class ChatController {
         chatService.save(message.getPayload(), orderId);
     }
 
-    @GetMapping
+    @GetMapping("/user/chat/history")
     public List<MessageDto> getMessages(@RequestParam Long orderId) {
         return chatService.getChat(orderId);
     }
