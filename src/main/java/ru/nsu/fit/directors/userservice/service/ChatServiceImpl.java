@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,14 @@ import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
 import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class ChatServiceImpl implements ChatService {
     private static final String ORDER_TOPIC = "orderTopic";
+    private static final String CHAT_TOPIC = "chatTopic";
+
     private final KafkaTemplate<String, UserMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
     private final OrderServiceClient orderServiceClient;
@@ -37,6 +41,11 @@ public class ChatServiceImpl implements ChatService {
             ORDER_TOPIC,
             new UserMessageEvent(user.getId(), orderId, chatMessage.message())
         );
+        kafkaTemplate.send(
+            CHAT_TOPIC,
+            new UserMessageEvent(user.getId(), orderId, chatMessage.message())
+        );
+        log.info("Successfully sent to CHAT_TOPIC {}", chatMessage);
     }
 
     @Nonnull
