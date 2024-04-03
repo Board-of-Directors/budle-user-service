@@ -15,7 +15,9 @@ import ru.nsu.fit.directors.userservice.dto.MessageDto;
 import ru.nsu.fit.directors.userservice.dto.request.ChatMessage;
 import ru.nsu.fit.directors.userservice.event.BusinessMessageEvent;
 import ru.nsu.fit.directors.userservice.event.UserMessageEvent;
+import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
 import ru.nsu.fit.directors.userservice.model.User;
+import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -26,10 +28,11 @@ public class ChatServiceImpl implements ChatService {
     private final SecurityService securityService;
     private final OrderServiceClient orderServiceClient;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final UserRepository userRepository;
 
     @Override
     public void save(ChatMessage chatMessage, Long orderId) {
-        User user = securityService.getLoggedInUser();
+        User user = userRepository.findById(chatMessage.userId()).orElseThrow(UserNotFoundException::new);
         kafkaTemplate.send(
             CHAT_TOPIC,
             new UserMessageEvent(user.getId(), orderId, chatMessage.message())
