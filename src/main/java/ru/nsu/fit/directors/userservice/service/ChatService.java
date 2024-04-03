@@ -15,7 +15,7 @@ public interface ChatService {
      *
      * @param chatMessage сообщение
      */
-    void save(ChatMessage chatMessage);
+    void save(ChatMessage chatMessage, Long orderId);
 
     /**
      * Получить историю сообщений в рамках брони.

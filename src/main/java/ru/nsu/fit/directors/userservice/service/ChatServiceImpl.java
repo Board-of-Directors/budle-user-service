@@ -25,11 +25,11 @@ public class ChatServiceImpl implements ChatService {
     private final OrderServiceClient orderServiceClient;
 
     @Override
-    public void save(ChatMessage chatMessage) {
+    public void save(ChatMessage chatMessage, Long orderId) {
         User user = securityService.getLoggedInUser();
         kafkaTemplate.send(
             CHAT_TOPIC,
-            new UserMessageEvent(user.getId(), chatMessage.orderId(), chatMessage.message())
+            new UserMessageEvent(user.getId(), orderId, chatMessage.message())
         );
     }
 
