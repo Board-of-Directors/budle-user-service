@@ -82,6 +82,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Nonnull
     private List<LocalDateTime> getValidTimes(RequestOrderDto requestOrderDto) {
-        return establishmentServiceClient.getValidTimes(requestOrderDto.getEstablishmentId());
+        return establishmentServiceClient.getValidTimes(requestOrderDto.getEstablishmentId()).getBody().getResult();
     }
 }

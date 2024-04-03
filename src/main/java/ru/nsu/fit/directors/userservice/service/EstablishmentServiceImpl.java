@@ -39,12 +39,12 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     @Nonnull
     @Override
     public List<ResponseReviewDto> getReviewsByExternalIds(List<Long> externalIds) {
-        return establishmentClient.getReviewsByExternalIds(externalIds);
+        return establishmentClient.getReviewsByExternalIds(externalIds).getBody().getResult();
     }
 
     @Nonnull
     @Override
     public Long createReview(ReviewCreationDto reviewCreationDto) {
-        return establishmentClient.createReview(reviewCreationDto);
+        return establishmentClient.createReview(reviewCreationDto).getBody().getResult();
     }
 }

@@ -35,11 +35,11 @@ public interface EstablishmentServiceClient {
     );
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/review", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<ResponseReviewDto> getReviewsByExternalIds(@RequestParam List<Long> ids);
+    ResponseEntity<BaseResponse<List<ResponseReviewDto>>> getReviewsByExternalIds(@RequestParam List<Long> ids);
 
     @RequestMapping(method = RequestMethod.POST, value = "/internal/review", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    Long createReview(@RequestBody ReviewCreationDto reviewCreationDto);
+    ResponseEntity<BaseResponse<Long>> createReview(@RequestBody ReviewCreationDto reviewCreationDto);
 
     @RequestMapping(method = RequestMethod.GET, value = "/establishment/internal/time", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<LocalDateTime> getValidTimes(@RequestParam Long establishmentId);
+    ResponseEntity<BaseResponse<List<LocalDateTime>>> getValidTimes(@RequestParam Long establishmentId);
 }
