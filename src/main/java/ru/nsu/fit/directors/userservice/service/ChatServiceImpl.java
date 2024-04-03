@@ -23,7 +23,7 @@ import ru.nsu.fit.directors.userservice.repository.UserRepository;
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class ChatServiceImpl implements ChatService {
-    private static final String CHAT_TOPIC = "chatTopic";
+    private static final String ORDER_TOPIC = "orderTopic";
     private final KafkaTemplate<String, UserMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
     private final OrderServiceClient orderServiceClient;
@@ -34,7 +34,7 @@ public class ChatServiceImpl implements ChatService {
     public void save(ChatMessage chatMessage, Long orderId) {
         User user = userRepository.findById(chatMessage.userId()).orElseThrow(UserNotFoundException::new);
         kafkaTemplate.send(
-            CHAT_TOPIC,
+            ORDER_TOPIC,
             new UserMessageEvent(user.getId(), orderId, chatMessage.message())
         );
     }
