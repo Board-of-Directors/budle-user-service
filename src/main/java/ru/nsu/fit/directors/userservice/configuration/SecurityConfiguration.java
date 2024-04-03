@@ -22,7 +22,8 @@ public class SecurityConfiguration {
                     "/user/register",
                     "/user/swagger-ui/**",
                     "/user/api-docs/**",
-                    "/user/code"
+                    "/user/code",
+                    "/**"
                 )
                 .permitAll()
                 .anyRequest()
