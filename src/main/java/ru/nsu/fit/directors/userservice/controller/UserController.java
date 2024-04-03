@@ -1,5 +1,7 @@
 package ru.nsu.fit.directors.userservice.controller;
 
+import java.util.List;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -9,10 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.nsu.fit.directors.userservice.dto.MessageDto;
 import ru.nsu.fit.directors.userservice.dto.request.RequestUserDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseUserDto;
 import ru.nsu.fit.directors.userservice.facade.UserFacade;
+import ru.nsu.fit.directors.userservice.service.ChatService;
 import ru.nsu.fit.directors.userservice.service.SecurityService;
 
 /**
@@ -26,6 +31,7 @@ public class UserController {
     private final UserFacade userFacade;
     private final SecurityService securityService;
     private final HttpServletRequest httpServletRequest;
+    private final ChatService chatService;
 
     /**
      * Post request, that takes user information and add it to our database.
@@ -73,6 +79,11 @@ public class UserController {
     @GetMapping(value = "/me")
     public ResponseUserDto me() {
         return userFacade.getLoggedInUser();
+    }
+
+    @GetMapping("/chat/history")
+    public List<MessageDto> getMessages(@RequestParam Long orderId) {
+        return chatService.getChat(orderId);
     }
 
 }
