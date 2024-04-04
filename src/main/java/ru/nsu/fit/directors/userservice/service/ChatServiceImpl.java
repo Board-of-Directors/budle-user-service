@@ -26,7 +26,7 @@ import ru.nsu.fit.directors.userservice.repository.UserRepository;
 @ParametersAreNonnullByDefault
 public class ChatServiceImpl implements ChatService {
     private static final String ORDER_TOPIC = "orderTopic";
-    private static final String CHAT_TOPIC = "chatTopic";
+    private static final String CHAT_TOPIC = "user-chat-topic";
 
     private final KafkaTemplate<String, UserMessageEvent> kafkaTemplate;
     private final SecurityService securityService;
