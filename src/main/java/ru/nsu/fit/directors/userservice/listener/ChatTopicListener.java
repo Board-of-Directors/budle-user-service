@@ -15,10 +15,10 @@ import ru.nsu.fit.directors.userservice.service.ChatService;
 @Component
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
-@KafkaListener(topics = "chatTopic")
 public class ChatTopicListener {
     private final ChatService chatService;
 
+    @KafkaListener(topics = "chatTopic", groupId = "orderId")
     @KafkaHandler(isDefault = true)
     public void handleMessage(@Payload BusinessMessageEvent businessMessageEvent) {
         log.info("Receive business message {}", businessMessageEvent);
