@@ -21,4 +21,13 @@ public interface UserService {
      */
     @Nonnull
     User getLoggedInUser();
+
+    /**
+     * Получить пользователя по номеру телефона.
+     *
+     * @param phoneNumber номер телефона
+     * @return пользователя
+     */
+    @Nonnull
+    User getByPhoneNumber(String phoneNumber);
 }

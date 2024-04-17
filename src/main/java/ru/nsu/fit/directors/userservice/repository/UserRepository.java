@@ -1,5 +1,7 @@
 package ru.nsu.fit.directors.userservice.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -35,7 +37,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param username - with that username we search user.
      * @return true - if user exists, false - otherwise.
      */
-
     boolean existsByUsername(String username);
+
+    Optional<User> findByPhoneNumber(String phoneNumber);
 
 }
