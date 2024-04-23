@@ -1,6 +1,5 @@
 package ru.nsu.fit.directors.userservice.controller;
 
-import jakarta.ws.rs.BadRequestException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -23,14 +22,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.userservice.exception.BaseException;
-import ru.nsu.fit.directors.userservice.exception.ClientException;
-import ru.nsu.fit.directors.userservice.exception.IncorrectPhoneNumberFormatException;
-import ru.nsu.fit.directors.userservice.exception.OrderBookingTimeException;
-import ru.nsu.fit.directors.userservice.exception.ServerNotAvailableException;
-import ru.nsu.fit.directors.userservice.exception.UserAlreadyExistsException;
-import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
-import ru.nsu.fit.directors.userservice.exception.VerificationCodeWasFalseException;
-import ru.nsu.fit.directors.userservice.exception.WrongCredentialsException;
 
 import java.util.LinkedHashMap;
 
@@ -38,18 +29,8 @@ import java.util.LinkedHashMap;
 public class ArticleController extends ResponseEntityExceptionHandler implements ResponseBodyAdvice<Object> {
     private static final String NOT_VALID_EXCEPTION = "notValidException";
 
-    @ExceptionHandler({
-        UserAlreadyExistsException.class,
-        UserNotFoundException.class,
-        BadRequestException.class,
-        WrongCredentialsException.class,
-        OrderBookingTimeException.class,
-        ServerNotAvailableException.class,
-        ClientException.class,
-        VerificationCodeWasFalseException.class,
-        IncorrectPhoneNumberFormatException.class
-    })
-    public <T extends BaseException> ResponseEntity<BaseResponse<Object>> handleException(T e) {
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<BaseResponse<Object>> handleException(BaseException e) {
         BaseResponse<Object> response = new BaseResponse<>(e.getMessage(), e.getType());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
