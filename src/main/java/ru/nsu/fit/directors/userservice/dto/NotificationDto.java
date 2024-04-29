@@ -1,4 +1,4 @@
-package ru.nsu.fit.directors.userservice.service;
+package ru.nsu.fit.directors.userservice.dto;
 
 import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;
 

@@ -1,5 +1,7 @@
 package ru.nsu.fit.directors.userservice.service;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.BadRequestException;
@@ -16,9 +18,10 @@ import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.userservice.exception.UserNotFoundException;
 import ru.nsu.fit.directors.userservice.model.User;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@ParametersAreNonnullByDefault
 public class SecurityServiceImpl implements SecurityService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.util.function.Tuple2;
-import ru.nsu.fit.directors.userservice.service.NotificationDto;
+import ru.nsu.fit.directors.userservice.dto.NotificationDto;
 import ru.nsu.fit.directors.userservice.service.NotificationService;
 
 import java.time.Duration;

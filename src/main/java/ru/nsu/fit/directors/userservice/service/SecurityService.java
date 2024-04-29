@@ -1,26 +1,33 @@
 package ru.nsu.fit.directors.userservice.service;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import jakarta.servlet.http.HttpServletRequest;
 import ru.nsu.fit.directors.userservice.model.User;
 
+@ParametersAreNonnullByDefault
 public interface SecurityService {
 
     /**
-     * Get user that logged in the system.
+     * Получить активного пользователя.
      *
-     * @return user
+     * @return данные пользователя
      */
     User getLoggedInUser();
 
     /**
-     * Login user with provided cridentials.
+     * Выполнить вход.
      *
-     * @param username name of the user
-     * @param password user password
-     * @param request  servlet request
+     * @param username имя пользователя
+     * @param password пароль
+     * @param request  запрос
      */
-
     void autoLogin(String username, String password, HttpServletRequest request);
 
+    /**
+     * Выйти из аккаунта.
+     *
+     * @param httpServletRequest запрос
+     */
     void logout(HttpServletRequest httpServletRequest);
 }

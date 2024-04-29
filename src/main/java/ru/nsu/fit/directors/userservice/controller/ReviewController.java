@@ -2,8 +2,6 @@ package ru.nsu.fit.directors.userservice.controller;
 
 import java.util.List;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,6 @@ import ru.nsu.fit.directors.userservice.facade.ReviewFacade;
 @RestController
 @RequestMapping(value = "/user/review")
 @RequiredArgsConstructor
-@ParametersAreNonnullByDefault
 public class ReviewController {
     private final ReviewFacade reviewFacade;
 

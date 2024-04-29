@@ -21,42 +21,21 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    /**
-     * Post request for creating a booking order.
-     *
-     * @param requestOrderDto request for creating order
-     */
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void order(@RequestBody RequestOrderDto requestOrderDto) {
         orderService.createOrder(requestOrderDto);
     }
 
-    /**
-     * Put request for cancelling order.
-     *
-     * @param orderId identifier of order to cancel it.
-     */
     @PutMapping(value = "/cancel")
     public void cancelOrder(@RequestParam Long orderId) {
         orderService.cancelOrder(orderId);
     }
 
-    /**
-     * Get request for getting all user orders.
-     *
-     * @param status order status (optional)
-     * @return list of user orders
-     */
     @GetMapping
     public List<ResponseOrderDto> getOrders(@RequestParam(required = false) Integer status) {
         return orderService.getOrders(status);
     }
 
-    /**
-     * Put request for confirming order.
-     *
-     * @param orderId identifier of order to confirm order.
-     */
     @PutMapping(value = "/confirm")
     public void confirmOrder(@RequestParam Long orderId) {
         orderService.confirmOrder(orderId);

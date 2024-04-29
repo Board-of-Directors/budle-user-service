@@ -14,9 +14,12 @@ import ru.nsu.fit.directors.userservice.repository.UserRepository;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@ParametersAreNonnullByDefault
 public class CodeServiceImpl implements CodeService {
     private final CodeRepository codeRepository;
     private final UserRepository userRepository;
@@ -48,10 +51,10 @@ public class CodeServiceImpl implements CodeService {
                 throw new IncorrectPhoneNumberFormatException();
             } else {
                 log.info("Creating new instance of code");
-                Code code = new Code();
-                code.setCode((String) response.get("code"));
-                code.setPhoneNumber(phoneNumber);
-                code.setType(CodeType.registration);
+                Code code = new Code()
+                    .setCode((String) response.get("code"))
+                    .setPhoneNumber(phoneNumber)
+                    .setType(CodeType.registration);
                 codeRepository.save(code);
                 log.info("Code " + code + "was created successfully ");
                 return true;

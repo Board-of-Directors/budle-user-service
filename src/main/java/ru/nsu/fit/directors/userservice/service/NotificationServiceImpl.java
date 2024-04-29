@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import ru.nsu.fit.directors.userservice.api.OrderServiceClient;
 import ru.nsu.fit.directors.userservice.api.VkApi;
+import ru.nsu.fit.directors.userservice.dto.NotificationDto;
 import ru.nsu.fit.directors.userservice.dto.request.RequestVkNotification;
 import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseOrderDto;

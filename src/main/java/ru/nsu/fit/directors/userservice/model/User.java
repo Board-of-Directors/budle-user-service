@@ -10,10 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,9 +21,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
-@AllArgsConstructor
 @Accessors(chain = true)
 @Table(name = "users")
 public class User implements UserDetails {
@@ -44,7 +39,6 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(name = "company_id")
     )
     private List<Company> favourites;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

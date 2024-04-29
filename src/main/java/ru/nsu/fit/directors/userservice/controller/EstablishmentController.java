@@ -16,13 +16,7 @@ import ru.nsu.fit.directors.userservice.service.EstablishmentService;
 @Validated
 public class EstablishmentController {
     private final EstablishmentService establishmentService;
-    /**
-     * Get requests for establishments.
-     * Can filter establishments by fields, also implemented sorting and pagination.
-     *
-     * @param parameters - list of get parameters for establishments
-     * @return list of establishment dto, list size included.
-     */
+
     @GetMapping(value = "all")
     public EstablishmentListDto getEstablishments(@Valid RequestGetEstablishmentParameters parameters) {
         return establishmentService.getEstablishmentByParams(parameters);

@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.userservice.service;
 
 import reactor.core.publisher.Flux;
+import ru.nsu.fit.directors.userservice.dto.NotificationDto;
 import ru.nsu.fit.directors.userservice.event.OrderNotificationEvent;
 
 import java.util.List;

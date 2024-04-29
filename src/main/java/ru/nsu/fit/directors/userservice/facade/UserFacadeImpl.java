@@ -35,19 +35,13 @@ public class UserFacadeImpl implements UserFacade {
     @Nonnull
     @Override
     public ResponseUserDto getLoggedInUser() {
-        User user = userService.getLoggedInUser();
-        return ResponseUserDto.builder()
-            .id(user.getId())
-            .phoneNumber(user.getPhoneNumber())
-            .username(user.getUsername())
-            .build();
+        return userMapper.toResponse(userService.getLoggedInUser());
     }
 
     @Override
     public void registerUser(RequestUserDto requestUserDto) {
-        log.info("Registering user with");
-        User user = userMapper.dtoToModel(requestUserDto);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = userMapper.dtoToModel(requestUserDto)
+            .setPassword(passwordEncoder.encode(requestUserDto.getPassword()));
         userService.save(user);
     }
 

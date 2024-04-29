@@ -7,10 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import ru.nsu.fit.directors.userservice.enums.CodeType;
 
@@ -20,8 +19,7 @@ import java.time.LocalDateTime;
 @Table(name = "code")
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
+@Accessors(chain = true)
 public class Code {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +30,4 @@ public class Code {
     private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     private CodeType type;
-
-    public Code() {
-
-    }
 }

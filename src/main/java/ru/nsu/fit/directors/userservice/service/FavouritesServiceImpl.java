@@ -2,7 +2,7 @@ package ru.nsu.fit.directors.userservice.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.userservice.dto.CompanyDto;
 import ru.nsu.fit.directors.userservice.model.Company;
 import ru.nsu.fit.directors.userservice.model.User;
@@ -10,13 +10,15 @@ import ru.nsu.fit.directors.userservice.repository.CompanyRepository;
 import ru.nsu.fit.directors.userservice.repository.CompanyService;
 import ru.nsu.fit.directors.userservice.repository.UserRepository;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
-@Component
 @ParametersAreNonnullByDefault
 public class FavouritesServiceImpl implements FavouritesService {
     private final SecurityService securityService;
@@ -47,6 +49,7 @@ public class FavouritesServiceImpl implements FavouritesService {
         userRepository.save(loggedUser);
     }
 
+    @Nonnull
     @Override
     @Transactional
     public List<CompanyDto> getFavourites() {
@@ -54,6 +57,7 @@ public class FavouritesServiceImpl implements FavouritesService {
         return companyService.getCompaniesByIds(loggedUser.getFavourites().stream().map(Company::getId).toList());
     }
 
+    @Nonnull
     @Override
     public List<Long> getFavouritesIds() {
         try {
@@ -63,6 +67,5 @@ public class FavouritesServiceImpl implements FavouritesService {
             return Collections.emptyList();
         }
     }
-
 
 }

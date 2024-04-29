@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @Service
@@ -21,6 +22,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @Slf4j
 public class RequestSenderServiceImpl implements RequestSenderService {
 
+    @Nonnull
+    @Override
     public Map<String, Object> sendRequest(String phoneNumber) {
 
         if (!phoneNumber.startsWith("7")) {
@@ -28,12 +31,12 @@ public class RequestSenderServiceImpl implements RequestSenderService {
         }
 
         String requestString = "https://api.ucaller.ru/v1.0/initCall?" +
-            "phone=" + phoneNumber +
-            "&voice=" + "false" +
-            "&key=1vvjxSFMby9xJx783gk31AT7UDPEHBdI" +
-            "&service_id=317622";
+                               "phone=" + phoneNumber +
+                               "&voice=" + "false" +
+                               "&key=1vvjxSFMby9xJx783gk31AT7UDPEHBdI" +
+                               "&service_id=317622";
 
-        Map<String, Object> map = null;
+        Map<String, Object> map = Map.of();
 
         try {
             log.info("Request to UCaller API was sent");
