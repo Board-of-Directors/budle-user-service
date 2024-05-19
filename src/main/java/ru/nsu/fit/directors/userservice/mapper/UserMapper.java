@@ -12,7 +12,7 @@ import ru.nsu.fit.directors.userservice.model.User;
 public class UserMapper {
 
     @Nonnull
-    public User dtoToModel(RequestUserDto requestUserDto) {
+    public User toModel(RequestUserDto requestUserDto) {
         return new User()
             .setPhoneNumber(requestUserDto.getPhoneNumber())
             .setUsername(requestUserDto.getUsername())

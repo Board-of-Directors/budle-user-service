@@ -1,6 +1,7 @@
 package ru.nsu.fit.directors.userservice.api;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public interface EstablishmentServiceClient {
     ResponseEntity<BaseResponse<Company>> getCompanyById(@RequestParam Long establishmentId);
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/establishment", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BaseResponse<List<CompanyDto>>> getCompaniesByIds(@RequestParam List<Long> ids);
+    ResponseEntity<BaseResponse<List<CompanyDto>>> getCompaniesByIds(@RequestParam Collection<Long> ids);
 
     @RequestMapping(method = RequestMethod.GET, value = "/establishment/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<BaseResponse<EstablishmentListDto>> searchEstablishments(

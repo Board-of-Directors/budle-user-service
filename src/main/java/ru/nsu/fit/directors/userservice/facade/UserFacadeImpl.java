@@ -39,9 +39,8 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void registerUser(RequestUserDto requestUserDto) {
-        User user = userMapper.dtoToModel(requestUserDto)
-            .setPassword(passwordEncoder.encode(requestUserDto.getPassword()));
+    public void registerUser(RequestUserDto userDto) {
+        User user = userMapper.toModel(userDto).setPassword(passwordEncoder.encode(userDto.getPassword()));
         userService.save(user);
     }
 

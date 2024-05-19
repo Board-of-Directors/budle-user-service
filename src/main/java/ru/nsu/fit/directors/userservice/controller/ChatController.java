@@ -17,7 +17,6 @@ public class ChatController {
 
     @MessageMapping("/send/{orderId}")
     public void send(@DestinationVariable Long orderId, Message<ChatMessage> message) {
-        log.info("received order message {}", orderId);
         chatService.save(message.getPayload(), orderId);
     }
 }
