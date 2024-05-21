@@ -17,19 +17,12 @@ import ru.nsu.fit.directors.userservice.repository.UserRepository;
 @ParametersAreNonnullByDefault
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final SecurityService securityService;
 
     @Override
     public void save(User user) {
         log.info("Saving user");
         validate(user);
         userRepository.save(user);
-    }
-
-    @Nonnull
-    @Override
-    public User getLoggedInUser() {
-        return securityService.getLoggedInUser();
     }
 
     @Nonnull

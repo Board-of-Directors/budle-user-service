@@ -18,6 +18,7 @@ import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.security.JwtTokenProvider;
 import ru.nsu.fit.directors.userservice.security.claims.RefreshTokenClaims;
 import ru.nsu.fit.directors.userservice.security.model.RefreshToken;
+import ru.nsu.fit.directors.userservice.service.SecurityService;
 import ru.nsu.fit.directors.userservice.service.SessionService;
 import ru.nsu.fit.directors.userservice.service.UserService;
 
@@ -26,6 +27,7 @@ import ru.nsu.fit.directors.userservice.service.UserService;
 @RequiredArgsConstructor
 @ParametersAreNonnullByDefault
 public class UserFacadeImpl implements UserFacade {
+    private final SecurityService securityService;
     private final UserService userService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +37,7 @@ public class UserFacadeImpl implements UserFacade {
     @Nonnull
     @Override
     public ResponseUserDto getLoggedInUser() {
-        return userMapper.toResponse(userService.getLoggedInUser());
+        return userMapper.toResponse(securityService.getLoggedInUser());
     }
 
     @Override

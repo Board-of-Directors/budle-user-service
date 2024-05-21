@@ -15,14 +15,6 @@ public interface UserService {
     void save(User user);
 
     /**
-     * Получить активного пользователя.
-     *
-     * @return данные об активном пользователе
-     */
-    @Nonnull
-    User getLoggedInUser();
-
-    /**
      * Получить пользователя по номеру телефона.
      *
      * @param phoneNumber номер телефона
