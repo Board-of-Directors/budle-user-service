@@ -40,21 +40,6 @@ public class UserController {
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Boolean register(@RequestBody @Valid RequestUserDto requestUserDto) {
         userFacade.registerUser(requestUserDto);
-        securityService.autoLogin(
-            requestUserDto.getUsername(),
-            requestUserDto.getPassword(),
-            httpServletRequest
-        );
-        return true;
-    }
-
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Boolean login(@RequestBody RequestUserDto requestUserDto) {
-        securityService.autoLogin(
-            requestUserDto.getUsername(),
-            requestUserDto.getPassword(),
-            httpServletRequest
-        );
         return true;
     }
 

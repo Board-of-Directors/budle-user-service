@@ -38,9 +38,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(UserNotFoundException::new);
     }
 
+    @Nonnull
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(UserNotFoundException::new);
+    }
+
     private void validate(User user) {
         boolean exists = userRepository.existsByPhoneNumber(user.getPhoneNumber())
-                         || userRepository.existsByUsername(user.getUsername());
+            || userRepository.existsByUsername(user.getUsername());
         if (exists) {
             throw new UserAlreadyExistsException();
         }

@@ -1,5 +1,6 @@
 package ru.nsu.fit.directors.userservice.service;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,16 +14,8 @@ public interface SecurityService {
      *
      * @return данные пользователя
      */
+    @Nonnull
     User getLoggedInUser();
-
-    /**
-     * Выполнить вход.
-     *
-     * @param username имя пользователя
-     * @param password пароль
-     * @param request  запрос
-     */
-    void autoLogin(String username, String password, HttpServletRequest request);
 
     /**
      * Выйти из аккаунта.

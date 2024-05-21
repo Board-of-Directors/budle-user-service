@@ -30,4 +30,12 @@ public interface UserService {
      */
     @Nonnull
     User getByPhoneNumber(String phoneNumber);
+
+    /**
+     * Получить пользователя по идентификатору.
+     * @param userId идентификатор пользователя
+     * @return пользователь
+     */
+    @Nonnull
+    User getUserById(Long userId);
 }
