@@ -29,10 +29,10 @@ public interface EstablishmentServiceClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/establishment/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<BaseResponse<EstablishmentListDto>> searchEstablishments(
-        @RequestParam Optional<String> name,
-        @RequestParam Optional<Boolean> hasMap,
-        @RequestParam Optional<Boolean> hasCardPayment,
-        @RequestParam Optional<String> category
+        @RequestParam(required = false) Optional<String> name,
+        @RequestParam(required = false) Optional<Boolean> hasMap,
+        @RequestParam(required = false) Optional<Boolean> hasCardPayment,
+        @RequestParam(required = false) Optional<String> category
     );
 
     @RequestMapping(method = RequestMethod.GET, value = "/internal/review", produces = MediaType.APPLICATION_JSON_VALUE)
