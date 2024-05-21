@@ -51,9 +51,11 @@ public class UserFacadeImpl implements UserFacade {
         if (!passwordEncoder.matches(userCredentials.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("Не вошел в аккаунт", "Не вошел в аккаунт");
         }
+        RefreshToken refreshToken = jwtTokenProvider.createRefreshToken(userCredentials.getPhoneNumber());
+        sessionService.createSession(user, refreshToken);
         return new AuthResponse(
-            jwtTokenProvider.createAccessToken(userCredentials.getUsername(), user, 1234L),
-            jwtTokenProvider.createRefreshToken(userCredentials.getUsername()).getToken()
+            jwtTokenProvider.createAccessToken(userCredentials.getPhoneNumber(), user, 1234L),
+            refreshToken.getToken()
         );
     }
 
