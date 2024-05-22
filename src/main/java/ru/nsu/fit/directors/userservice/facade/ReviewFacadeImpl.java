@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nsu.fit.directors.userservice.dto.request.ReviewCreationDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseReviewDto;
+import ru.nsu.fit.directors.userservice.model.User;
 import ru.nsu.fit.directors.userservice.model.UserReview;
 import ru.nsu.fit.directors.userservice.service.EstablishmentService;
 import ru.nsu.fit.directors.userservice.service.ReviewService;
@@ -24,8 +25,9 @@ public class ReviewFacadeImpl implements ReviewFacade {
 
     @Override
     public void createReview(ReviewCreationDto reviewCreationDto) {
-        Long externalId = establishmentService.createReview(reviewCreationDto);
-        reviewService.save(new UserReview().setUser(securityService.getLoggedInUser()).setExternalId(externalId));
+        User user = securityService.getLoggedInUser();
+        Long externalId = establishmentService.createReview(reviewCreationDto.withUsername(user.getUsername()));
+        reviewService.save(new UserReview().setUser(user).setExternalId(externalId));
     }
 
     @Nonnull

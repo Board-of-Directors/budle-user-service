@@ -9,6 +9,8 @@ import ru.nsu.fit.directors.userservice.dto.request.ReviewCreationDto;
 import ru.nsu.fit.directors.userservice.dto.response.BaseResponse;
 import ru.nsu.fit.directors.userservice.dto.response.EstablishmentListDto;
 import ru.nsu.fit.directors.userservice.dto.response.ResponseReviewDto;
+import ru.nsu.fit.directors.userservice.enums.EntityType;
+import ru.nsu.fit.directors.userservice.exception.EntityNotFoundException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -61,6 +63,8 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     @Nonnull
     @Override
     public Long createReview(ReviewCreationDto reviewCreationDto) {
-        return establishmentClient.createReview(reviewCreationDto).getBody().getResult();
+        return Optional.ofNullable(establishmentClient.createReview(reviewCreationDto).getBody())
+            .map(BaseResponse::getResult)
+            .orElseThrow(() -> new EntityNotFoundException(EntityType.COMPANY, reviewCreationDto.establishmentId()));
     }
 }

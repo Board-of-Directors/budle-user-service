@@ -1,5 +1,6 @@
 package ru.nsu.fit.directors.userservice.dto.request;
 
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 
 public record ReviewCreationDto(
@@ -12,4 +13,8 @@ public record ReviewCreationDto(
     @NotNull(message = "Оценка не может быть не задана.")
     Integer score
 ) {
+    @Nonnull
+    public ReviewCreationDto withUsername(String newUsername) {
+        return new ReviewCreationDto(newUsername, establishmentId, text, score);
+    }
 }
